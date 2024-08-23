@@ -1,4 +1,4 @@
-package vn.tuanphampp9.jobhunter.domain;
+package vn.tuanphampp9.jobhunter.domain.Response;
 
 public class RestResponse<T> {
     private int statusCode;

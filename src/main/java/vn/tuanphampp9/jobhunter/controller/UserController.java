@@ -6,11 +6,11 @@ import com.mysql.cj.x.protobuf.MysqlxDatatypes.Object;
 import com.turkraft.springfilter.boot.Filter;
 
 import jakarta.validation.Valid;
-import vn.tuanphampp9.jobhunter.domain.RestResponse;
 import vn.tuanphampp9.jobhunter.domain.User;
 import vn.tuanphampp9.jobhunter.domain.Response.ResCreateUserDTO;
 import vn.tuanphampp9.jobhunter.domain.Response.ResUpdateDTO;
 import vn.tuanphampp9.jobhunter.domain.Response.ResUserDTO;
+import vn.tuanphampp9.jobhunter.domain.Response.RestResponse;
 import vn.tuanphampp9.jobhunter.domain.Response.ResultPaginationDTO;
 import vn.tuanphampp9.jobhunter.service.UserService;
 import vn.tuanphampp9.jobhunter.util.annotation.ApiMessage;
