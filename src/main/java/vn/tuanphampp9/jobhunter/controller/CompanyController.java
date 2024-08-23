@@ -8,7 +8,7 @@ import jakarta.validation.Valid;
 import vn.tuanphampp9.jobhunter.domain.Company;
 import vn.tuanphampp9.jobhunter.domain.RestResponse;
 import vn.tuanphampp9.jobhunter.domain.User;
-import vn.tuanphampp9.jobhunter.domain.DTO.ResultPaginationDTO;
+import vn.tuanphampp9.jobhunter.domain.Response.ResultPaginationDTO;
 import vn.tuanphampp9.jobhunter.service.CompanyService;
 import vn.tuanphampp9.jobhunter.util.annotation.ApiMessage;
 

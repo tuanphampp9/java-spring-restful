@@ -1,4 +1,4 @@
-package vn.tuanphampp9.jobhunter.domain.DTO;
+package vn.tuanphampp9.jobhunter.domain.Response;
 
 import vn.tuanphampp9.jobhunter.util.constant.GenderEnum;
 import java.time.Instant;

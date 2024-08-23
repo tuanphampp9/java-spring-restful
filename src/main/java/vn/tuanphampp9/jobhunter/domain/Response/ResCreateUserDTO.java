@@ -1,4 +1,4 @@
-package vn.tuanphampp9.jobhunter.domain.DTO;
+package vn.tuanphampp9.jobhunter.domain.Response;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;

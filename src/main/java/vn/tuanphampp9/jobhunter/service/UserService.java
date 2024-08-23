@@ -7,11 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 import vn.tuanphampp9.jobhunter.domain.User;
-import vn.tuanphampp9.jobhunter.domain.DTO.Meta;
-import vn.tuanphampp9.jobhunter.domain.DTO.ResCreateUserDTO;
-import vn.tuanphampp9.jobhunter.domain.DTO.ResUpdateDTO;
-import vn.tuanphampp9.jobhunter.domain.DTO.ResUserDTO;
-import vn.tuanphampp9.jobhunter.domain.DTO.ResultPaginationDTO;
+import vn.tuanphampp9.jobhunter.domain.Response.ResCreateUserDTO;
+import vn.tuanphampp9.jobhunter.domain.Response.ResUpdateDTO;
+import vn.tuanphampp9.jobhunter.domain.Response.ResUserDTO;
+import vn.tuanphampp9.jobhunter.domain.Response.ResultPaginationDTO;
 import vn.tuanphampp9.jobhunter.repository.UserRepository;
 import java.util.stream.Collectors;
 
@@ -60,7 +59,7 @@ public class UserService {
             Pageable pageable) {
         Page<User> pageUser = this.userRepository.findAll(spec, pageable);
         ResultPaginationDTO resultPaginationDTO = new ResultPaginationDTO();
-        Meta meta = new Meta();
+        ResultPaginationDTO.Meta meta = new ResultPaginationDTO.Meta();
         meta.setPage(pageable.getPageNumber() + 1);
         meta.setPageSize(pageUser.getSize());
         meta.setTotal(pageUser.getTotalElements());// amount of elements

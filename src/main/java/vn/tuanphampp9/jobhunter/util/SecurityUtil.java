@@ -19,11 +19,10 @@ import org.springframework.stereotype.Service;
 
 import com.nimbusds.jose.util.Base64;
 
+import vn.tuanphampp9.jobhunter.domain.Response.ResLoginDTO;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import vn.tuanphampp9.jobhunter.domain.DTO.ResLoginDTO;
-
 import java.util.Optional;
 
 import javax.crypto.SecretKey;
