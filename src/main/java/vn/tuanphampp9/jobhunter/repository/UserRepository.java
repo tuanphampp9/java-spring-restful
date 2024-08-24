@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
+import vn.tuanphampp9.jobhunter.domain.Company;
 import vn.tuanphampp9.jobhunter.domain.User;
 
 @Repository
@@ -23,4 +24,6 @@ public interface UserRepository extends JpaRepository<User, Long>, JpaSpecificat
     boolean existsByEmail(String email);
 
     User findByRefreshTokenAndEmail(String token, String email);
+
+    List<User> findByCompany(Company company);
 }

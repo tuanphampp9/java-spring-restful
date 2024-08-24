@@ -6,12 +6,14 @@ import com.mysql.cj.x.protobuf.MysqlxDatatypes.Object;
 import com.turkraft.springfilter.boot.Filter;
 
 import jakarta.validation.Valid;
+import vn.tuanphampp9.jobhunter.domain.Company;
 import vn.tuanphampp9.jobhunter.domain.User;
 import vn.tuanphampp9.jobhunter.domain.Response.ResCreateUserDTO;
 import vn.tuanphampp9.jobhunter.domain.Response.ResUpdateDTO;
 import vn.tuanphampp9.jobhunter.domain.Response.ResUserDTO;
 import vn.tuanphampp9.jobhunter.domain.Response.RestResponse;
 import vn.tuanphampp9.jobhunter.domain.Response.ResultPaginationDTO;
+import vn.tuanphampp9.jobhunter.service.CompanyService;
 import vn.tuanphampp9.jobhunter.service.UserService;
 import vn.tuanphampp9.jobhunter.util.annotation.ApiMessage;
 import vn.tuanphampp9.jobhunter.util.error.IdInvalidException;
@@ -35,10 +37,13 @@ import org.springframework.web.bind.annotation.PutMapping;
 public class UserController {
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
+    private final CompanyService companyService;
 
-    public UserController(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserController(UserService userService, PasswordEncoder passwordEncoder,
+            CompanyService companyService) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
+        this.companyService = companyService;
     }
 
     @PostMapping("/users")
