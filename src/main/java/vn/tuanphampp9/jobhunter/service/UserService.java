@@ -160,4 +160,8 @@ public class UserService {
     public User getUserByRefreshTokenAndEmail(String token, String email) {
         return this.userRepository.findByRefreshTokenAndEmail(token, email);
     }
+
+    public boolean handleExistById(long id) {
+        return this.userRepository.existsById(id);
+    }
 }

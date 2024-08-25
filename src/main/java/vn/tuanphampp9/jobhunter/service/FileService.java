@@ -1,6 +1,7 @@
 package vn.tuanphampp9.jobhunter.service;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,6 +14,8 @@ import java.io.File;
 import java.net.URISyntaxException;
 import java.io.InputStream;
 import java.nio.file.StandardCopyOption;
+import java.io.FileNotFoundException;
+import java.io.FileInputStream;
 
 @Service
 public class FileService {
@@ -47,5 +50,25 @@ public class FileService {
                     StandardCopyOption.REPLACE_EXISTING);
         }
         return finalName;
+    }
+
+    public long getFileLength(String fileName, String folder) throws URISyntaxException {
+        URI uri = new URI(baseURI + folder + "/" + fileName);
+        Path path = Paths.get(uri);
+        File tmpDir = new File(path.toString());
+
+        // check if file exists, or is a directory
+        if (!tmpDir.exists() || tmpDir.isDirectory()) {
+            return 0;
+        }
+        return tmpDir.length();
+    }
+
+    public InputStreamResource getResource(String fileName, String folder)
+            throws URISyntaxException, FileNotFoundException {
+        URI uri = new URI(baseURI + folder + "/" + fileName);
+        Path path = Paths.get(uri);
+        File file = new File(path.toString());
+        return new InputStreamResource(new FileInputStream(file));
     }
 }

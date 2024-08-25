@@ -118,4 +118,8 @@ public class JobService {
         resultPaginationDTO.setResult(pageJob.getContent());
         return resultPaginationDTO;
     }
+
+    public boolean handleExistById(long id) {
+        return this.jobRepository.existsById(id);
+    }
 }
