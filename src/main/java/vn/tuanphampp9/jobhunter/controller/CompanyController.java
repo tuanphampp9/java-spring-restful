@@ -11,6 +11,7 @@ import vn.tuanphampp9.jobhunter.domain.Response.RestResponse;
 import vn.tuanphampp9.jobhunter.domain.Response.ResultPaginationDTO;
 import vn.tuanphampp9.jobhunter.service.CompanyService;
 import vn.tuanphampp9.jobhunter.util.annotation.ApiMessage;
+import vn.tuanphampp9.jobhunter.util.error.IdInvalidException;
 
 import java.util.List;
 
@@ -75,6 +76,18 @@ public class CompanyController {
         }
         this.companyService.handleDeleteCompany(id);
         return ResponseEntity.status(HttpStatus.OK).body(null);
+    }
+
+    @GetMapping("companies/{id}")
+    @ApiMessage("Get company by id")
+    public ResponseEntity<Company> getCompanyById(@PathVariable("id") long id)
+            throws IdInvalidException {
+        Company company = this.companyService.handleGetCompanyById(id);
+        if (company == null) {
+            throw new IdInvalidException("Company not found");
+        }
+
+        return ResponseEntity.ok().body(company);
     }
 
 }

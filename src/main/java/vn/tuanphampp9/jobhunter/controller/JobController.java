@@ -52,7 +52,7 @@ public class JobController {
         if (oldJob.isEmpty()) {
             throw new IdInvalidException("Job not found");
         }
-        return ResponseEntity.ok().body(this.jobService.handleUpdateJob(job));
+        return ResponseEntity.ok().body(this.jobService.handleUpdateJob(job, oldJob.get()));
     }
 
     @DeleteMapping("jobs/{id}")
@@ -74,7 +74,7 @@ public class JobController {
     }
 
     @GetMapping("/jobs/{id}")
-    public ResponseEntity<Job> getJob(@PathVariable long id)
+    public ResponseEntity<Job> getJob(@PathVariable("id") long id)
             throws IdInvalidException {
         Optional<Job> job = this.jobService.handleFindJobById(id);
         if (job.isEmpty()) {
