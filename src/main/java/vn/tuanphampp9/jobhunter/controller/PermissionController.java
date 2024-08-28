@@ -60,7 +60,8 @@ public class PermissionController {
 
         boolean isExist = this.permissionService.handleExistsPermission(permission.getModule(), permission.getApiPath(),
                 permission.getMethod());
-        if (isExist) {
+        boolean isSameName = this.permissionService.isSameName(permission);
+        if (isExist && isSameName) {
             throw new IdInvalidException("Permission already exists");
         }
         permissionFound.setName(permission.getName());

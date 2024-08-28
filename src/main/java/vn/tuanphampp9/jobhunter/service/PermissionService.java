@@ -59,4 +59,12 @@ public class PermissionService {
         // delete permission
         this.permissionRepository.deleteById(id);
     }
+
+    public boolean isSameName(Permission permission) {
+        Permission permissionFound = this.permissionRepository.findById(permission.getId()).orElse(null);
+        if (permissionFound != null && permissionFound.getName().equals(permission.getName())) {
+            return true;
+        }
+        return false;
+    }
 }

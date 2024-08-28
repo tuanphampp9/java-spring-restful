@@ -91,18 +91,14 @@ public class UserController {
 
     @PutMapping("/users")
     @ApiMessage("Update a user")
-    public ResponseEntity<ResUpdateDTO> updateUser(@RequestBody User user)
+    public ResponseEntity<ResUpdateDTO> updateUser(@RequestBody User newUser)
             throws IdInvalidException {
-        User findUser = this.userService.handleGetUser(user.getId());
+        User findUser = this.userService.handleGetUser(newUser.getId());
         if (findUser == null) {
             throw new IdInvalidException("User is not exist");
         }
-        findUser.setAddress(user.getAddress());
-        findUser.setAge(user.getAge());
-        findUser.setEmail(user.getEmail());
-        findUser.setGender(user.getGender());
-        findUser.setName(user.getName());
-        User userResult = this.userService.handleUpdateUser(findUser);
+
+        User userResult = this.userService.handleUpdateUser(newUser, findUser);
         return ResponseEntity.status(HttpStatus.OK).body(this.userService.convertToResUpdateDTO(userResult));
     }
 

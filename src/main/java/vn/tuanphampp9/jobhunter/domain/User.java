@@ -64,6 +64,11 @@ public class User {
     @JsonIgnore
     List<Resume> resumes;
 
+    // many users belong to one role
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     @PrePersist // action before save
     public void handleBeforeCreate() {
         this.createdBy = SecurityUtil.getCurrentUserLogin().isPresent() ? SecurityUtil.getCurrentUserLogin().get() : "";

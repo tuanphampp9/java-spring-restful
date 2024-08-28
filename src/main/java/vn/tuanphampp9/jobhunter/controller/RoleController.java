@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.turkraft.springfilter.boot.Filter;
 
+import io.micrometer.core.ipc.http.HttpSender.Response;
 import jakarta.validation.Valid;
 import vn.tuanphampp9.jobhunter.domain.Permission;
 import vn.tuanphampp9.jobhunter.domain.Role;
@@ -50,10 +51,6 @@ public class RoleController {
         if (roleFound == null) {
             throw new IdInvalidException("Role not found");
         }
-        boolean isExist = this.roleService.handleExistsRole(role.getName());
-        if (isExist) {
-            throw new IdInvalidException("Role already exists");
-        }
         return ResponseEntity.status(HttpStatus.CREATED).body(this.roleService.handleUpdateRole(role, roleFound));
     }
 
@@ -62,6 +59,16 @@ public class RoleController {
             @Filter Specification<Role> spec,
             Pageable pageable) {
         return ResponseEntity.ok().body(this.roleService.handleFindAllRoles(spec, pageable));
+    }
+
+    @GetMapping("/roles/{id}")
+    public ResponseEntity<Role> getRoleById(@PathVariable("id") long id)
+            throws IdInvalidException {
+        Role role = this.roleService.handleFindRoleById(id);
+        if (role == null) {
+            throw new IdInvalidException("Role not found");
+        }
+        return ResponseEntity.ok().body(role);
     }
 
     @DeleteMapping("roles/{id}")

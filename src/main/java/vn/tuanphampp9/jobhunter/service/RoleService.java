@@ -74,4 +74,8 @@ public class RoleService {
     public void handleDeleteRole(Long id) {
         this.roleRepository.deleteById(id);
     }
+
+    public Role handleGetRoleById(long id) {
+        return this.roleRepository.findById(id).orElse(null);
+    }
 }

@@ -1,9 +1,15 @@
 package vn.tuanphampp9.jobhunter.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import com.turkraft.springfilter.converter.FilterSpecification;
+import com.turkraft.springfilter.converter.FilterSpecificationConverter;
+import com.turkraft.springfilter.parser.FilterParser;
+import com.turkraft.springfilter.parser.node.FilterNode;
 
 import vn.tuanphampp9.jobhunter.domain.Company;
 import vn.tuanphampp9.jobhunter.domain.Resume;
@@ -14,6 +20,8 @@ import vn.tuanphampp9.jobhunter.domain.Response.resume.ResCreateResumeDTO;
 import vn.tuanphampp9.jobhunter.domain.Response.resume.ResFetchResumeDTO;
 import vn.tuanphampp9.jobhunter.domain.Response.resume.ResUpdateResumeDTO;
 import vn.tuanphampp9.jobhunter.repository.ResumeRepository;
+import vn.tuanphampp9.jobhunter.util.SecurityUtil;
+
 import java.util.stream.Collectors;
 import java.util.List;
 
@@ -22,6 +30,11 @@ public class ResumeService {
     private final ResumeRepository resumeRepository;
     private final UserService userService;
     private final JobService jobService;
+
+    @Autowired
+    private FilterParser filterParser;
+    @Autowired
+    private FilterSpecificationConverter filterSpecificationConverter;
 
     public ResumeService(ResumeRepository resumeRepository, UserService userService, JobService jobService) {
         this.resumeRepository = resumeRepository;
@@ -109,6 +122,24 @@ public class ResumeService {
         List<ResFetchResumeDTO> listResume = pageResume.getContent().stream().map(
                 resume -> this.getResume(resume)).collect(Collectors.toList());
         resultPaginationDTO.setResult(listResume);
+        return resultPaginationDTO;
+    }
+
+    public ResultPaginationDTO fetchResumeByUser(Pageable pageable) {
+        // query builder
+        String email = SecurityUtil.getCurrentUserLogin().isPresent() ? SecurityUtil.getCurrentUserLogin().get() : "";
+        FilterNode node = filterParser.parse("email='" + email + "'");
+        FilterSpecification<Resume> spec = filterSpecificationConverter.convert(node);
+        Page<Resume> pageResume = this.resumeRepository.findAll(spec, pageable);
+
+        ResultPaginationDTO resultPaginationDTO = new ResultPaginationDTO();
+        ResultPaginationDTO.Meta meta = new ResultPaginationDTO.Meta();
+        meta.setPage(pageable.getPageNumber() + 1);// current start from 1
+        meta.setPageSize(pageable.getPageSize());
+        meta.setTotal(pageResume.getTotalElements());// amount of elements
+        meta.setPages(pageResume.getTotalPages());// amount of pages
+        resultPaginationDTO.setMeta(meta);
+        resultPaginationDTO.setResult(pageResume.getContent());
         return resultPaginationDTO;
     }
 }
